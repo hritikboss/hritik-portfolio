@@ -1,4 +1,47 @@
+import { motion } from "framer-motion";
 import profile from "../data/profile";
+
+const ease = [0.22, 1, 0.36, 1];
+
+const fadeUp = {
+  hidden: {
+    opacity: 0,
+    y: 35,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.8,
+      ease,
+    },
+  },
+};
+
+const contactCards = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.12,
+      delayChildren: 0.15,
+    },
+  },
+};
+
+const cardItem = {
+  hidden: {
+    opacity: 0,
+    y: 30,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.65,
+      ease,
+    },
+  },
+};
 
 function MailIcon() {
   return (
@@ -77,38 +120,109 @@ function Contact() {
   return (
     <section
       id="contact"
-      className="relative overflow-hidden bg-[#111111] py-24 sm:py-32"
+      className="relative overflow-hidden bg-[#111111] pb-16 pt-24 sm:pb-20 sm:pt-32"
     >
       {/* Ambient Glow */}
-      <div className="pointer-events-none absolute left-1/2 top-1/2 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#7C3AED]/10 blur-[140px]" />
+      <motion.div
+        className="pointer-events-none absolute left-1/2 top-1/2 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#7C3AED]/10 blur-[140px]"
+        animate={{
+          scale: [1, 1.12, 1],
+          opacity: [0.4, 0.65, 0.4],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
 
       <div className="relative mx-auto max-w-5xl px-6 text-center lg:px-8">
+
         {/* Section Label */}
-        <span className="font-mono text-xs uppercase tracking-[0.2em] text-[#7C3AED]">
+        <motion.span
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{
+            once: true,
+            amount: 0.4,
+          }}
+          className="inline-block font-mono text-xs uppercase tracking-[0.2em] text-[#7C3AED]"
+        >
           06 / Contact
-        </span>
+        </motion.span>
 
         {/* Heading */}
-        <h2 className="mt-5 text-4xl font-semibold leading-tight tracking-[-0.03em] text-[#F5F5F5] sm:text-5xl lg:text-6xl">
+        <motion.h2
+          initial={{
+            opacity: 0,
+            y: 45,
+            scale: 0.98,
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+            scale: 1,
+          }}
+          viewport={{
+            once: true,
+            amount: 0.35,
+          }}
+          transition={{
+            duration: 0.9,
+            delay: 0.08,
+            ease,
+          }}
+          className="mt-5 text-4xl font-semibold leading-tight tracking-[-0.03em] text-[#F5F5F5] sm:text-5xl lg:text-6xl"
+        >
           Have an idea?
           <br />
           <span className="text-[#C4B5FD]">
             Let&apos;s build it.
           </span>
-        </h2>
+        </motion.h2>
 
         {/* Description */}
-        <p className="mx-auto mt-6 max-w-xl text-base leading-7 text-[#A1A1AA]">
+        <motion.p
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{
+            once: true,
+            amount: 0.35,
+          }}
+          transition={{
+            delay: 0.2,
+          }}
+          className="mx-auto mt-6 max-w-xl text-base leading-7 text-[#A1A1AA]"
+        >
           Whether it&apos;s a backend system, an AI-powered application, or a
           data-driven solution, I&apos;m open to interesting opportunities and
           meaningful projects.
-        </p>
+        </motion.p>
 
         {/* Primary Actions */}
-        <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-          <a
+        <motion.div
+          variants={contactCards}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{
+            once: true,
+            amount: 0.3,
+          }}
+          className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row"
+        >
+          <motion.a
+            variants={cardItem}
             href={`mailto:${profile.contact.email}`}
-            className="group inline-flex w-full items-center justify-center rounded-full bg-[#7C3AED] px-7 py-3.5 text-sm font-medium text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#6D28D9] hover:shadow-xl hover:shadow-[#7C3AED]/20 sm:w-auto"
+            whileHover={{
+              y: -4,
+              scale: 1.02,
+            }}
+            whileTap={{
+              scale: 0.98,
+            }}
+            className="group inline-flex w-full items-center justify-center rounded-full bg-[#7C3AED] px-7 py-3.5 text-sm font-medium text-white shadow-lg shadow-[#7C3AED]/10 transition-colors hover:bg-[#6D28D9] hover:shadow-xl hover:shadow-[#7C3AED]/20 sm:w-auto"
           >
             <MailIcon />
 
@@ -116,29 +230,54 @@ function Contact() {
               Send Me an Email
             </span>
 
-            <span className="ml-2 transition-transform group-hover:translate-x-0.5">
+            <motion.span
+              className="ml-2"
+              initial={{ x: 0 }}
+              whileHover={{ x: 3 }}
+            >
               ↗
-            </span>
-          </a>
+            </motion.span>
+          </motion.a>
 
-          <a
+          <motion.a
+            variants={cardItem}
             href={`tel:${profile.contact.phone}`}
-            className="inline-flex w-full items-center justify-center rounded-full border border-white/10 bg-[#181818] px-7 py-3.5 text-sm font-medium text-[#F5F5F5] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#7C3AED]/40 hover:bg-[#202020] sm:w-auto"
+            whileHover={{
+              y: -4,
+              scale: 1.02,
+            }}
+            whileTap={{
+              scale: 0.98,
+            }}
+            className="inline-flex w-full items-center justify-center rounded-full border border-white/10 bg-[#181818] px-7 py-3.5 text-sm font-medium text-[#F5F5F5] transition-colors hover:border-[#7C3AED]/40 hover:bg-[#202020] sm:w-auto"
           >
             <PhoneIcon />
 
             <span className="ml-2">
               Call Me
             </span>
-          </a>
-        </div>
+          </motion.a>
+        </motion.div>
 
         {/* Contact Details */}
-        <div className="mx-auto mt-14 grid max-w-3xl gap-3 sm:grid-cols-3">
+        <motion.div
+          variants={contactCards}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{
+            once: true,
+            amount: 0.2,
+          }}
+          className="mx-auto mt-14 grid max-w-3xl gap-3 sm:grid-cols-3"
+        >
           {/* Email */}
-          <a
+          <motion.a
+            variants={cardItem}
             href={`mailto:${profile.contact.email}`}
-            className="group rounded-2xl border border-white/10 bg-[#181818] p-5 text-left transition-all duration-300 hover:-translate-y-1 hover:border-[#7C3AED]/30 hover:bg-[#1D1D1D]"
+            whileHover={{
+              y: -5,
+            }}
+            className="group rounded-2xl border border-white/10 bg-[#181818] p-5 text-left transition-colors duration-300 hover:border-[#7C3AED]/30 hover:bg-[#1D1D1D]"
           >
             <div className="flex items-center gap-3">
               <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-[#7C3AED]/20 bg-[#7C3AED]/10 text-[#C4B5FD]">
@@ -153,12 +292,16 @@ function Contact() {
             <p className="mt-3 truncate text-sm text-[#A1A1AA] group-hover:text-[#C4B5FD]">
               {profile.contact.email}
             </p>
-          </a>
+          </motion.a>
 
           {/* Phone */}
-          <a
+          <motion.a
+            variants={cardItem}
             href={`tel:${profile.contact.phone}`}
-            className="group rounded-2xl border border-white/10 bg-[#181818] p-5 text-left transition-all duration-300 hover:-translate-y-1 hover:border-[#7C3AED]/30 hover:bg-[#1D1D1D]"
+            whileHover={{
+              y: -5,
+            }}
+            className="group rounded-2xl border border-white/10 bg-[#181818] p-5 text-left transition-colors duration-300 hover:border-[#7C3AED]/30 hover:bg-[#1D1D1D]"
           >
             <div className="flex items-center gap-3">
               <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-[#7C3AED]/20 bg-[#7C3AED]/10 text-[#C4B5FD]">
@@ -173,10 +316,16 @@ function Contact() {
             <p className="mt-3 text-sm text-[#A1A1AA] group-hover:text-[#C4B5FD]">
               {profile.contact.phone}
             </p>
-          </a>
+          </motion.a>
 
           {/* Location */}
-          <div className="rounded-2xl border border-white/10 bg-[#181818] p-5 text-left">
+          <motion.div
+            variants={cardItem}
+            whileHover={{
+              y: -5,
+            }}
+            className="rounded-2xl border border-white/10 bg-[#181818] p-5 text-left transition-colors duration-300 hover:border-[#7C3AED]/30 hover:bg-[#1D1D1D]"
+          >
             <div className="flex items-center gap-3">
               <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-[#7C3AED]/20 bg-[#7C3AED]/10 text-[#C4B5FD]">
                 <LocationIcon />
@@ -190,35 +339,60 @@ function Contact() {
             <p className="mt-3 text-sm text-[#A1A1AA]">
               {profile.location}
             </p>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         {/* Social Links */}
-        <div className="mt-10 flex items-center justify-center gap-6 text-sm text-[#71717A]">
-          <a
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 20,
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+          }}
+          viewport={{
+            once: true,
+            amount: 0.4,
+          }}
+          transition={{
+            duration: 0.7,
+            delay: 0.2,
+            ease,
+          }}
+          className="mt-10 flex items-center justify-center gap-6 text-sm text-[#71717A]"
+        >
+          <motion.a
             href={profile.contact.github}
             target="_blank"
             rel="noreferrer"
+            whileHover={{
+              y: -2,
+            }}
             className="inline-flex items-center gap-2 transition-colors hover:text-[#C4B5FD]"
           >
             <GithubIcon />
             <span>GitHub</span>
             <span>↗</span>
-          </a>
+          </motion.a>
 
           <span className="text-[#303030]">•</span>
 
-          <a
+          <motion.a
             href={profile.contact.linkedin}
             target="_blank"
             rel="noreferrer"
+            whileHover={{
+              y: -2,
+            }}
             className="inline-flex items-center gap-2 transition-colors hover:text-[#C4B5FD]"
           >
             <LinkedinIcon />
             <span>LinkedIn</span>
             <span>↗</span>
-          </a>
-        </div>
+          </motion.a>
+        </motion.div>
       </div>
     </section>
   );

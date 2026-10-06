@@ -1,4 +1,46 @@
+import { motion } from "framer-motion";
 import education from "../data/education";
+
+const ease = [0.22, 1, 0.36, 1];
+
+const fadeUp = {
+  hidden: {
+    opacity: 0,
+    y: 30,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.75,
+      ease,
+    },
+  },
+};
+
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.12,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: {
+    opacity: 0,
+    y: 25,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease,
+    },
+  },
+};
 
 function GraduationIcon() {
   return (
@@ -64,7 +106,16 @@ function Education() {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
 
         {/* Section Header */}
-        <div className="mb-12 max-w-2xl">
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{
+            once: true,
+            amount: 0.35,
+          }}
+          className="mb-12 max-w-2xl"
+        >
           <span className="font-mono text-xs uppercase tracking-[0.2em] text-[#7C3AED]">
             05 / Education
           </span>
@@ -77,20 +128,33 @@ function Education() {
             Academic background, certifications, and achievements that shaped
             my technical journey.
           </p>
-        </div>
+        </motion.div>
 
         {/* Main Grid */}
         <div className="grid gap-5 lg:grid-cols-[1.05fr_0.95fr]">
 
           {/* Academic Background */}
-          <div className="rounded-2xl border border-white/10 bg-[#181818] p-6 sm:p-8">
-
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{
+              once: true,
+              amount: 0.2,
+            }}
+            variants={fadeUp}
+            className="rounded-2xl border border-white/10 bg-[#181818] p-6 sm:p-8"
+          >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-
-                <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#7C3AED]/20 bg-[#7C3AED]/10 text-[#C4B5FD]">
+                <motion.div
+                  whileHover={{
+                    scale: 1.08,
+                    rotate: 2,
+                  }}
+                  className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#7C3AED]/20 bg-[#7C3AED]/10 text-[#C4B5FD]"
+                >
                   <GraduationIcon />
-                </div>
+                </motion.div>
 
                 <h3 className="text-xl font-semibold text-[#F5F5F5]">
                   Academic Background
@@ -102,17 +166,26 @@ function Education() {
               </span>
             </div>
 
-            <div className="mt-8 space-y-5">
+            <motion.div
+              variants={containerVariants}
+              className="mt-8 space-y-5"
+            >
               {education.academic.map((item, index) => (
-                <div
+                <motion.div
                   key={item.id}
-                  className={`relative rounded-xl border bg-[#111111] p-5 transition-all duration-300 hover:border-[#7C3AED]/30 ${
+                  variants={itemVariants}
+                  whileHover={{
+                    y: -3,
+                  }}
+                  transition={{
+                    duration: 0.25,
+                  }}
+                  className={`relative rounded-xl border bg-[#111111] p-5 transition-colors duration-300 hover:border-[#7C3AED]/30 ${
                     index === 0
                       ? "border-[#7C3AED]/25"
                       : "border-white/10"
                   }`}
                 >
-                  {/* Primary Education */}
                   {index === 0 && (
                     <span className="absolute right-4 top-4 rounded-full border border-[#7C3AED]/20 bg-[#7C3AED]/10 px-2.5 py-1 font-mono text-[8px] uppercase tracking-wider text-[#C4B5FD]">
                       Degree
@@ -141,20 +214,33 @@ function Education() {
                     <span>{item.duration}</span>
                     <span>{item.score}</span>
                   </div>
-                </div>
+                </motion.div>
               ))}
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           {/* Certifications */}
-          <div className="rounded-2xl border border-white/10 bg-[#181818] p-6 sm:p-8">
-
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{
+              once: true,
+              amount: 0.2,
+            }}
+            variants={fadeUp}
+            className="rounded-2xl border border-white/10 bg-[#181818] p-6 sm:p-8"
+          >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-
-                <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#7C3AED]/20 bg-[#7C3AED]/10 text-[#C4B5FD]">
+                <motion.div
+                  whileHover={{
+                    scale: 1.08,
+                    rotate: -2,
+                  }}
+                  className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#7C3AED]/20 bg-[#7C3AED]/10 text-[#C4B5FD]"
+                >
                   <CertificateIcon />
-                </div>
+                </motion.div>
 
                 <h3 className="text-xl font-semibold text-[#F5F5F5]">
                   Certifications
@@ -166,18 +252,26 @@ function Education() {
               </span>
             </div>
 
-            <div className="mt-8 space-y-3">
+            <motion.div
+              variants={containerVariants}
+              className="mt-8 space-y-3"
+            >
               {education.certifications.map((cert, index) => (
-                <div
+                <motion.div
                   key={cert.id}
-                  className="group flex items-center gap-4 rounded-xl border border-white/10 bg-[#111111] p-4 transition-all duration-300 hover:border-[#7C3AED]/30 hover:bg-[#151515]"
+                  variants={itemVariants}
+                  whileHover={{
+                    x: 3,
+                  }}
+                  transition={{
+                    duration: 0.25,
+                  }}
+                  className="group flex items-center gap-4 rounded-xl border border-white/10 bg-[#111111] p-4 transition-colors duration-300 hover:border-[#7C3AED]/30 hover:bg-[#151515]"
                 >
-                  {/* Number */}
                   <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-[#181818] font-mono text-[9px] text-[#7C3AED]">
                     {String(index + 1).padStart(2, "0")}
                   </div>
 
-                  {/* Content */}
                   <div className="min-w-0 flex-1">
                     <h4 className="text-sm font-medium text-[#F5F5F5]">
                       {cert.title}
@@ -188,26 +282,46 @@ function Education() {
                     </p>
                   </div>
 
-                  {/* Date */}
                   <span className="shrink-0 font-mono text-[9px] text-[#52525B]">
                     {cert.date}
                   </span>
-                </div>
+                </motion.div>
               ))}
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
 
         {/* Achievements */}
-        <div className="mt-5 rounded-2xl border border-white/10 bg-[#181818] p-6 sm:p-8">
-
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 35,
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+          }}
+          viewport={{
+            once: true,
+            amount: 0.2,
+          }}
+          transition={{
+            duration: 0.8,
+            ease,
+          }}
+          className="mt-5 rounded-2xl border border-white/10 bg-[#181818] p-6 sm:p-8"
+        >
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-
             <div className="flex items-center gap-3">
-
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#7C3AED]/20 bg-[#7C3AED]/10 text-[#C4B5FD]">
+              <motion.div
+                whileHover={{
+                  scale: 1.08,
+                  rotate: 4,
+                }}
+                className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#7C3AED]/20 bg-[#7C3AED]/10 text-[#C4B5FD]"
+              >
                 <TrophyIcon />
-              </div>
+              </motion.div>
 
               <h3 className="text-xl font-semibold text-[#F5F5F5]">
                 Achievements
@@ -219,14 +333,37 @@ function Education() {
             </span>
           </div>
 
-          <div className="mt-6 grid gap-4 sm:grid-cols-2">
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{
+              once: true,
+              amount: 0.2,
+            }}
+            className="mt-6 grid gap-4 sm:grid-cols-2"
+          >
             {education.achievements.map((achievement) => (
-              <div
+              <motion.div
                 key={achievement.id}
-                className="group rounded-xl border border-white/10 bg-[#111111] p-5 transition-all duration-300 hover:border-[#7C3AED]/30 hover:bg-[#151515]"
+                variants={itemVariants}
+                whileHover={{
+                  y: -3,
+                }}
+                className="group rounded-xl border border-white/10 bg-[#111111] p-5 transition-colors duration-300 hover:border-[#7C3AED]/30 hover:bg-[#151515]"
               >
                 <div className="flex items-start gap-3">
-                  <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-[#7C3AED] shadow-lg shadow-[#7C3AED]/30" />
+                  <motion.span
+                    className="mt-1 h-2 w-2 shrink-0 rounded-full bg-[#7C3AED] shadow-lg shadow-[#7C3AED]/30"
+                    animate={{
+                      opacity: [1, 0.5, 1],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
+                  />
 
                   <div>
                     <h4 className="text-sm font-medium text-[#C4B5FD]">
@@ -238,11 +375,10 @@ function Education() {
                     </p>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
-        </div>
-
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );
