@@ -9,7 +9,7 @@ const projects = [
     featured: true,
     status: "demo",
     github: "#",
-    live: "#",
+    live: "https://medassist-ai-4hzbsafsqctiatvsqbtolj.streamlit.app/",
   },
 
   {
